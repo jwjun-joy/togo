@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: StatisticsReporting
+  labels:
+    app: StatisticsReporting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: StatisticsReporting
+  template:
+    metadata:
+      labels:
+        app: StatisticsReporting
+    spec:
+      containers:
+        - name: StatisticsReporting
+          image: "username/StatisticsReporting:latest"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5

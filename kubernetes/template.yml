@@ -1,0 +1,285 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: OrderManagement
+  labels:
+    app: OrderManagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: OrderManagement
+  template:
+    metadata:
+      labels:
+        app: OrderManagement
+    spec:
+      containers:
+        - name: OrderManagement
+          image: username/OrderManagement:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Delivery
+  labels:
+    app: Delivery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Delivery
+  template:
+    metadata:
+      labels:
+        app: Delivery
+    spec:
+      containers:
+        - name: Delivery
+          image: username/Delivery:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RestaurantMenu
+  labels:
+    app: RestaurantMenu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: RestaurantMenu
+  template:
+    metadata:
+      labels:
+        app: RestaurantMenu
+    spec:
+      containers:
+        - name: RestaurantMenu
+          image: username/RestaurantMenu:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: UserAccessControl
+  labels:
+    app: UserAccessControl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: UserAccessControl
+  template:
+    metadata:
+      labels:
+        app: UserAccessControl
+    spec:
+      containers:
+        - name: UserAccessControl
+          image: username/UserAccessControl:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: StatisticsReporting
+  labels:
+    app: StatisticsReporting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: StatisticsReporting
+  template:
+    metadata:
+      labels:
+        app: StatisticsReporting
+    spec:
+      containers:
+        - name: StatisticsReporting
+          image: username/StatisticsReporting:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: OrderManagement
+  labels:
+    app: OrderManagement
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: OrderManagement
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: Delivery
+  labels:
+    app: Delivery
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Delivery
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: RestaurantMenu
+  labels:
+    app: RestaurantMenu
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: RestaurantMenu
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: UserAccessControl
+  labels:
+    app: UserAccessControl
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: UserAccessControl
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: StatisticsReporting
+  labels:
+    app: StatisticsReporting
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: StatisticsReporting
+
